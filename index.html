@@ -575,6 +575,119 @@ footer {
   #problema, #perche, #progetti, #servizi, #montagna, #cta { padding: 80px 24px; }
   .topo-svg { height: 60%; top: auto; bottom: 0; }
 }
+  /* ============================
+   STAMPA / SALVA COME PDF
+   ============================ */
+@media print {
+
+  /* Forza Chrome a stampare colori e sfondi senza dover toccare le impostazioni */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Dimensione foglio e margini del PDF */
+  @page {
+    size: A4;
+    margin: 12mm 10mm;
+  }
+
+  /* Reset elementi che danno problemi in stampa */
+  html, body {
+    background: #fff !important;
+    overflow: visible !important;
+  }
+
+  /* Nascondi la navbar fissa (occupa spazio in alto a ogni pagina) */
+  nav { display: none !important; }
+
+  /* Disattiva le animazioni di reveal: in stampa partirebbero invisibili */
+  .reveal,
+  .reveal.visible,
+  .problema-card,
+  .perche-card,
+  .proj-card,
+  .serv-cell,
+  .mtn-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Ogni section parte su una nuova pagina e non si spezza */
+  section {
+    min-height: auto !important;
+    padding: 30px 30px !important;
+    page-break-before: always;
+    page-break-inside: avoid;
+    break-before: page;
+    break-inside: avoid;
+  }
+
+  /* La prima section (hero) non deve avere page-break prima */
+  #hero {
+    page-break-before: auto;
+    break-before: auto;
+    min-height: auto !important;
+    padding: 30px !important;
+  }
+
+  /* Le card e i blocchi importanti non si spezzano a metà pagina */
+  .problema-card,
+  .perche-card,
+  .proj-card,
+  .serv-cell,
+  .mtn-card,
+  .cs-num-box,
+  .stat-box,
+  .cta-card,
+  .founder {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Titoli: evita che restino orfani in fondo alla pagina */
+  h1, h2, .sec-h2, .cs-h2, .proj-h2, .serv-h2, .mtn-h2, .cta-h2, .hero-h1 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Hero: rendi la griglia stampabile (era 100vh + 2 colonne) */
+  #hero {
+    display: grid !important;
+    grid-template-columns: 1.2fr 1fr !important;
+    gap: 20px;
+  }
+  .hero-left { padding: 20px !important; }
+  .hero-right-content { padding: 20px !important; }
+
+  /* Footer rimane in fondo, non forziamo nuova pagina */
+  footer {
+    page-break-before: avoid;
+    break-before: avoid;
+    padding: 20px 30px !important;
+  }
+
+  /* Le immagini non devono spezzarsi */
+  img { page-break-inside: avoid; break-inside: avoid; max-width: 100%; }
+
+  /* Riduci leggermente i padding generici per sfruttare meglio l'A4 */
+  #problema, #chisiamo, #perche, #progetti, #servizi, #montagna, #cta {
+    padding: 30px 30px !important;
+  }
+
+  /* Le griglie 3 colonne (progetti, servizi) in A4 stanno strette: passa a 2 */
+  .proj-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+  .serv-grid { grid-template-columns: 1fr 1fr 1fr !important; }
+  .perche-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+  .mtn-grid { grid-template-columns: 1fr 1fr !important; }
+
+  /* Riduci leggermente i titoli enormi che in PDF non servono */
+  .hero-h1 { font-size: 42px !important; }
+  .cs-h2, .sec-h2, .proj-h2, .serv-h2, .cta-h2 { font-size: 32px !important; }
+  .mtn-h2 { font-size: 36px !important; }
+}
 </style>
 </head>
 <body>
